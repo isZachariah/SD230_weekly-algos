@@ -10,12 +10,18 @@
  */
 
 const problemOne = (arr) => {
-
-    return [
-        arr.reduce((pre,cur) => cur < pre ? cur : pre),
-        arr.reduce((pre,cur) => cur > pre ? cur : pre)
+    if (Array.isArray) {
+        arr.forEach((num, index) => {
+            if (typeof num !== 'number') {
+                throw new TypeError(`Expected Index: ${index} to be a number but got ${typeof num}`)
+            }
+        })
+        return [
+            arr.reduce((pre,cur) => cur < pre ? cur : pre),
+            arr.reduce((pre,cur) => cur > pre ? cur : pre)
         ]
-
+    }
+    throw new TypeError(`problemOne: Expected ${arr} to be number[] but got ${typeof arr}`)
 }
 
 /**
@@ -34,14 +40,18 @@ const problemOne = (arr) => {
 
 
 const problemTwo = (obj) => {
-    let grades = [];
+    if (typeof obj === 'object') {
+        let grades = [];
 
-    Object.keys(obj).forEach(key => obj[key] > 0 ? grades.push(obj[key]) : null)
+        Object.keys(obj).forEach(key => obj[key] > 0 ? grades.push(obj[key]) : null)
 
-    if (grades.length === 0) return undefined
+        if (grades.length === 0) return undefined
 
-    let average = grades.reduce((a,b) => a + b) / grades.length;
-    return parseFloat(average.toFixed(1))
+        let average = grades.reduce((a,b) => a + b) / grades.length;
+        return parseFloat(average.toFixed(1))
+    }
+    throw new TypeError(`problemTwo: Expected typeof ${obj} to be an object but got ${typeof obj}`)
+
 
 }
 
@@ -57,10 +67,17 @@ const problemTwo = (obj) => {
  * You must use Array operators like .forEach, .map, .filter, .reduce, etc.
  */
 const problemThree = (arr) => {
-
-    return arr.filter(value => value > 0)
+    if (Array.isArray(arr)) {
+        arr.forEach((num, index) => {
+            if (typeof num !== 'number') {
+                throw new TypeError(`Expected Index: ${index} to be a number but got ${typeof num}`)
+            }
+        })
+        return arr.filter(value => value > 0)
             .sort((a, b) => a - b)
             .slice(0, 3)
+    }
+    throw new TypeError(`problemThree: Expected ${arr} to be number[] but got ${typeof arr}`)
 
 }
 
@@ -77,13 +94,19 @@ const problemThree = (arr) => {
  */
 
 const problemFour = (arr) => {
-    let strings = {
-        short: [],
-        long: [],
-    }
-    arr.forEach(string => string.length < 10 ? strings.short.push(string) : strings.long.push(string))
+    if (Array.isArray(arr)) {
+        if (!arr.every((str, index) => typeof str === 'string')) {
+            throw new TypeError(`Expected every element of ${arr} to be a string`)
+        }
 
-    return strings
+        let strings = { short: [], long: [], }
+
+        arr.forEach(string => string.length < 10 ? strings.short.push(string) : strings.long.push(string))
+
+        return strings
+
+    }
+    throw new TypeError(`problemFour: Expected ${arr} to be string[] but got ${typeof arr}`)
 
 }
 

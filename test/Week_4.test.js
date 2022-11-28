@@ -68,7 +68,7 @@ describe('Week 4, ProblemFour', () => {
             short: ["The fox", "The dog"],
             long: ["The quick brown fox jumps over the lazy dog",
                    "The lazy dog",
-                   "The quick brown dog jumps over the lazy fox"]});
+                   "The quick brown fox"]});
     });
     it(`should return { 
         short: ["The fox", "The dog"], 
@@ -93,7 +93,7 @@ describe('Week 4, ProblemFour', () => {
             short: [],
             long: ["The quick brown fox jumps over the lazy dog",
                    "The lazy dog",
-                   "The quick brown dog jumps over the lazy fox"]});
+                   "The quick brown fox"]});
     });
 });
 

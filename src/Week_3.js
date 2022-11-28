@@ -14,8 +14,8 @@
  */
 
 
- function problemOne(obj)
- {
+ function problemOne(obj) {
+     if (typeof obj !== 'object') throw new TypeError(`problemOne: Expected typeof ${obj} to be an object but got ${typeof obj}`)
      let grades = [];
 
      for (let key of Object.keys(obj)) {
@@ -42,9 +42,20 @@
   * 
   * @returns {array}
   */
-   function problemTwo(obj)
-   {
-       return Object.entries(obj);
+   function problemTwo(obj) {
+       if (typeof obj === 'object') {
+           let elements = []
+           Object.entries(obj).forEach(([key, value]) => {
+               if (typeof value === 'object') {
+                   elements.push(problemTwo(value))
+               }
+               elements.push([key, value])
+           })
+
+           return elements
+       }
+       throw new TypeError(`problemTwo: Expected typeof ${obj} to be an object but got ${typeof obj}`)
+
    }
  
  /**
@@ -76,6 +87,13 @@
   */
  function problemThree(hand)
  {
+     if (typeof hand !== "object") throw new TypeError(`Expected ${hand} to be an object but got ${typeof hand}`)
+     // Check the typeof each suit and the values of each value
+     Object.entries(hand).every(([suit, value], index) => {
+         if (typeof suit !== 'string') throw new TypeError(`Expected typeof ${suit} to be a string but got ${typeof suit}`);
+         if (!VALUES.includes(value)) throw new CardValueError(`Card: ${value} at index ${index} is not an expected value`);
+     });
+
      const SUITS = ['clubs', 'hearts', 'spades' ,'diamonds'];
      const VALUES = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K', 'A'];
 
@@ -108,6 +126,13 @@
 
  }
 
+ class CardValueError extends Error {
+     constructor(message) {
+         super(message);
+         this.name = 'CardValueError';
+     }
+ }
+
 // https://rosettacode.org/wiki/Poker_hand_analyser#JavaScript
  
  /**
@@ -125,6 +150,9 @@
   */
   function problemFour(objOne, objTwo)
   {
+      if (typeof objOne !== 'object' || typeof objTwo !== 'object') {
+          throw new TypeError(`Expected parameters to be typeof 'object' but got ${typeof objOne} and ${typeof objTwo}`)
+      }
       return JSON.stringify(objOne) === JSON.stringify(objTwo);
   }
 
